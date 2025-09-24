@@ -1,5 +1,6 @@
 # Stage 1: Build the application
-FROM maven:3.8.7-openjdk-21 AS build
+FROM eclipse-temurin:21 AS build
+RUN apt-get update && apt-get install -y maven
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
