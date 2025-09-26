@@ -23,4 +23,4 @@ jobs:
     - name: Build the Docker image
       run: docker build -t metradingplat .
     - name: Push to Dockerhub
-      run: docker push virtud142/metradingplat:latest
+      run: docker push virtud142/metradingplat_gateway:latest
