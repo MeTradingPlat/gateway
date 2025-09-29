@@ -28,3 +28,6 @@ jobs:
             --name gateway \
             --network metradingplat-network \
             virtud142/metradingplat_gateway:latest
+            
+      - name: Remove Dangling Docker Images
+        run: sudo docker image prune -f
