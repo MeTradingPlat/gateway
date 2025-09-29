@@ -1,4 +1,4 @@
-name: CD Metradingplat Gateway
+name: CI Metradingplat Gateway
 
 on:
   push:
