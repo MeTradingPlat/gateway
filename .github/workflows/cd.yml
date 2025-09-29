@@ -7,15 +7,24 @@ on:
       - completed
 
 jobs:
-  build:
+  deploy:
     runs-on: self-hosted
 
     steps:
+      - name: Create Docker Network
+        run: |
+          sudo docker network create metradingplat-network || echo "Network already exists"
+
       - name: Pull Docker Image
         run: sudo docker pull virtud142/metradingplat_gateway:latest
 
       - name: Delete Old Docker Container
-        run: sudo docker rm -f metradingplat_gateway-container || true
+        run: sudo docker rm -f gateway || true
 
-      - name: Run Docker Container
-        run: sudo docker run -d -p 8080:8080 --name metradingplat_gateway-container virtud142/metradingplat_gateway:latest
+      - name: Run Docker Container with Network
+        run: |
+          sudo docker run -d \
+            -p 8080:8080 \
+            --name gateway \
+            --network metradingplat-network \
+            virtud142/metradingplat_gateway:latest
