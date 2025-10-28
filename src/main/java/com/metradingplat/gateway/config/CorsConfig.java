@@ -15,7 +15,7 @@ public class CorsConfig {
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Arrays.asList(
-            "http://localhost:4200", 
+            "http://localhost",
             "https://metradingplat.com", 
             "https://www.metradingplat.com",
             "http://metradingplat.com", 
