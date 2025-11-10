@@ -9,6 +9,8 @@ RUN mvn clean package -DskipTests
 
 # Stage 2: Production
 FROM eclipse-temurin:21-jre-alpine
+LABEL project="metradingplat"
+LABEL service="gateway"
 WORKDIR /app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
