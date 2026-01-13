@@ -21,8 +21,8 @@ jobs:
           echo "--- CLEANING SERVICE METADATA ---"
           docker rm -f gateway || true
           docker image rm -f virtud142/metradingplat_gateway:latest || true
-          docker image prune -f
-          docker builder prune -f
+          docker image prune -f || true
+          docker builder prune -f || true
 
       - name: Pull Docker Image (with Retry Logic)
         run: |
@@ -68,4 +68,4 @@ jobs:
           docker ps -a --filter "label=service=gateway" --filter "status=exited" -q | xargs -r docker rm 2>/dev/null || true
 
       - name: Remove Dangling Images
-        run: docker image prune -f
+        run: docker image prune -f || true
