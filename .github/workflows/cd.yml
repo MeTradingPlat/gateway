@@ -16,15 +16,22 @@ jobs:
         run: |
           docker network create metradingplat-network || echo "Network already exists"
 
-      - name: Targeted Service Cleanup (No Conflicts)
+      - name: Targeted Service Cleanup
         run: |
-          echo "Cleaning up only this service to avoid conflicts..."
+          echo "--- CLEANING SERVICE METADATA ---"
           docker rm -f gateway || true
           docker image rm -f virtud142/metradingplat_gateway:latest || true
           docker image prune -f
+          docker builder prune -f
 
-      - name: Pull Docker Image
-        run: docker pull virtud142/metradingplat_gateway:latest
+      - name: Pull Docker Image (with Retry Logic)
+        run: |
+          echo "Attempting to pull image with auto-retry for stability..."
+          for i in 1 2 3; do
+            docker pull virtud142/metradingplat_gateway:latest && exit 0 || \
+            (echo "Attempt $i failed, waiting 10s..." && sleep 10)
+          done
+          exit 1
 
       - name: Delete Old Docker Container
         run: docker rm -f gateway || true
