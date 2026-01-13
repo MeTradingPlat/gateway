@@ -16,6 +16,12 @@ jobs:
         run: |
           docker network create metradingplat-network || echo "Network already exists"
 
+      - name: Pre-pull Cleanup (Self-healing)
+        run: |
+          echo "Removing corrupted or old images to ensure a fresh pull..."
+          docker image rm -f virtud142/metradingplat_gateway:latest || true
+          docker image prune -f
+
       - name: Pull Docker Image
         run: docker pull virtud142/metradingplat_gateway:latest
 
