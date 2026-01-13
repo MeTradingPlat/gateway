@@ -1,3 +1,6 @@
+server:
+  forward-headers-strategy: native
+
 eureka:
   client:
     service-url:
