@@ -16,13 +16,9 @@ jobs:
         run: |
           docker network create metradingplat-network || echo "Network already exists"
 
-      - name: Targeted Service Cleanup
-        run: |
           echo "--- CLEANING SERVICE METADATA ---"
           docker rm -f gateway || true
           docker image rm -f virtud142/metradingplat_gateway:latest || true
-          docker image prune -f || true
-          docker builder prune -f || true
 
       - name: Pull Docker Image (with Retry Logic)
         run: |
@@ -67,5 +63,7 @@ jobs:
           echo "Cleaning stopped containers for gateway service..."
           docker ps -a --filter "label=service=gateway" --filter "status=exited" -q | xargs -r docker rm 2>/dev/null || true
 
-      - name: Remove Dangling Images
-        run: docker image prune -f || true
+      - name: Final Status Check
+        run: |
+          sleep 5
+          docker ps | grep gateway
