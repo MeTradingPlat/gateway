@@ -7,20 +7,38 @@ spring:
 
   cloud:
     gateway:
-      routes:
-        - id: scanner-management-service
-          uri: lb://scanner-management-service
-          predicates:
-            - Path=/api/escaner/**
-          filters:
-            - AddRequestHeader=X-Gateway-Passed,true
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      server:
+        webflux:
+          routes:
+            - id: scanner-management-service
+              uri: lb://scanner-management-service
+              predicates:
+                - Path=/api/escaner/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+            - id: marketdata-service
+              uri: lb://marketdata-service
+              predicates:
+                - Path=/api/marketdata/**,/api/test/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
   profiles:
     active: prod
 
 server:
   port: 8080
+
+# Actuator for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
