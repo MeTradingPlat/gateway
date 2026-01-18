@@ -38,6 +38,7 @@ jobs:
             -p 8080:8080 \
             --name "gateway" \
             --network "metradingplat-network" \
+            --restart "unless-stopped" \
             --label project="metradingplat" \
             --label service="gateway" \
             -e SPRING_PROFILES_ACTIVE="prod" \
