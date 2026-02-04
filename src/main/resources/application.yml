@@ -22,6 +22,24 @@ spring:
                 - Path=/api/marketdata/**,/api/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+            - id: asset-management-service
+              uri: lb://asset-management-service
+              predicates:
+                - Path=/api/activos/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+            - id: log-service
+              uri: lb://log-service
+              predicates:
+                - Path=/api/logs/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+            - id: notification-service
+              uri: lb://notification-service
+              predicates:
+                - Path=/api/notificaciones/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
           discovery:
             locator:
               enabled: true
