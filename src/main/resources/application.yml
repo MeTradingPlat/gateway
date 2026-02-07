@@ -40,6 +40,11 @@ spring:
                 - Path=/api/notificaciones/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - AddResponseHeader=X-Accel-Buffering,no
+                - AddResponseHeader=Cache-Control,no-cache
+              metadata:
+                response-timeout: -1
+                connect-timeout: 10000
           discovery:
             locator:
               enabled: true
@@ -50,6 +55,8 @@ spring:
 
 server:
   port: 8080
+  netty:
+    idle-timeout: 0
 
 # Actuator for health checks
 management:
