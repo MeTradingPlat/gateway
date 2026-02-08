@@ -13,6 +13,7 @@ spring:
             allowed-origins:
               - "https://metradingplat.com"
               - "https://www.metradingplat.com"
+              - "https://sse.metradingplat.com"
               - "http://localhost:4200"
             allowed-methods:
               - GET
