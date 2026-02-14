@@ -40,6 +40,9 @@ spring:
                 - Path=/api/marketdata/**,/api/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+              metadata:
+                response-timeout: 120000
+                connect-timeout: 10000
             - id: asset-management-service
               uri: lb://asset-management-service
               predicates:
