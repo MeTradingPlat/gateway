@@ -66,6 +66,18 @@ spring:
               metadata:
                 response-timeout: -1
                 connect-timeout: 10000
+            # signal-processing-service es Python/FastAPI y no registra en Eureka.
+            # URI directa al nombre del container en la red Docker.
+            # Sus endpoints son llamados internamente por scanner-management-service.
+            - id: signal-processing-service
+              uri: http://signal-processing-service:8000
+              predicates:
+                - Path=/api/signal-processing/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+              metadata:
+                response-timeout: 30000
+                connect-timeout: 5000
           discovery:
             locator:
               enabled: true
@@ -81,7 +93,19 @@ logging:
 server:
   port: 8080
   netty:
-    idle-timeout: 0
+    # Las conexiones SSE reciben heartbeats cada 30s, por lo que nunca alcanzan
+    # este timeout. Las conexiones HTTP inactivas se limpian tras 5 minutos.
+    idle-timeout: 300s
+
+# Configuración del rate limiting del gateway
+gateway:
+  rate-limit:
+    habilitado: true
+    limite-peticiones-por-minuto: 120
+    umbral-baneo-automatico: 300
+    duracion-baneo-minutos: 10
+    expiracion-bucket-minutos: 15
+    maximo-ips-en-cache: 50000
 
 # Actuator for health checks
 management:
