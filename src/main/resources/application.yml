@@ -66,18 +66,11 @@ spring:
               metadata:
                 response-timeout: -1
                 connect-timeout: 10000
-            # signal-processing-service es Python/FastAPI y no registra en Eureka.
-            # URI directa al nombre del container en la red Docker.
-            # Sus endpoints son llamados internamente por scanner-management-service.
-            - id: signal-processing-service
-              uri: http://signal-processing-service:8000
-              predicates:
-                - Path=/api/signal-processing/**
-              filters:
-                - AddRequestHeader=X-Gateway-Passed,true
-              metadata:
-                response-timeout: 30000
-                connect-timeout: 5000
+            # signal-processing-service NO está expuesto en el gateway.
+            # Se comunica exclusivamente dentro de la red Docker:
+            #   - scanner-management → signal-processing (REST interno)
+            #   - signal-processing → scanner-management (REST interno)
+            #   - ambos ↔ Kafka (red interna)
           discovery:
             locator:
               enabled: true
