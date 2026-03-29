@@ -11,8 +11,8 @@ spring:
         cors-configurations:
           '[/**]':
             allowed-origins:
-              - "https://metradingplat.com"
-              - "https://www.metradingplat.com"
+              - "https://metradingplat.net"
+              - "https://www.metradingplat.net"
               - "http://localhost:4200"
             allowed-methods:
               - GET
