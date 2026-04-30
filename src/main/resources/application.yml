@@ -28,18 +28,26 @@ spring:
       server:
         webflux:
           routes:
+            - id: auth-service
+              uri: lb://auth-service
+              predicates:
+                - Path=/api/auth/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
             - id: scanner-management-service
               uri: lb://scanner-management-service
               predicates:
                 - Path=/api/escaner/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
             - id: marketdata-service
               uri: lb://marketdata-service
               predicates:
                 - Path=/api/marketdata/**,/api/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
               metadata:
                 response-timeout: 120000
                 connect-timeout: 10000
@@ -49,18 +57,21 @@ spring:
                 - Path=/api/activos/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
             - id: log-service
               uri: lb://log-service
               predicates:
                 - Path=/api/logs/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
             - id: notification-service
               uri: lb://notification-service
               predicates:
                 - Path=/api/notificaciones/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
                 - AddResponseHeader=X-Accel-Buffering,no
                 - AddResponseHeader=Cache-Control,no-cache
               metadata:
@@ -78,6 +89,9 @@ spring:
 
   profiles:
     active: prod
+
+jwt:
+  secret: ${JWT_SECRET}
 
 logging:
   level:

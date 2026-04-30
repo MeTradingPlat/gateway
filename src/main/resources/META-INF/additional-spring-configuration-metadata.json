@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Clave secreta utilizada para verificar los tokens JWT en el gateway."
+    },
+    {
+      "name": "gateway.rate-limit.habilitado",
+      "type": "java.lang.Boolean",
+      "description": "Indica si el rate limiting está activo en el gateway."
+    },
+    {
+      "name": "gateway.rate-limit.limite-peticiones-por-minuto",
+      "type": "java.lang.Integer",
+      "description": "Cantidad máxima de peticiones por minuto permitidas por IP."
+    },
+    {
+      "name": "gateway.rate-limit.umbral-baneo-automatico",
+      "type": "java.lang.Integer",
+      "description": "Peticiones por minuto que activan baneo automático."
+    },
+    {
+      "name": "gateway.rate-limit.duracion-baneo-minutos",
+      "type": "java.lang.Integer",
+      "description": "Duración en minutos del baneo automático de IP."
+    },
+    {
+      "name": "gateway.rate-limit.expiracion-bucket-minutos",
+      "type": "java.lang.Integer",
+      "description": "Tiempo de expiración del bucket de rate limit."
+    },
+    {
+      "name": "gateway.rate-limit.maximo-ips-en-cache",
+      "type": "java.lang.Integer",
+      "description": "Tamaño máximo de IPs cacheadas para rate limit."
+    }
+  ]
+}
