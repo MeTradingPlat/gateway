@@ -45,6 +45,7 @@ jobs:
             --label service="gateway" \
             -e SPRING_PROFILES_ACTIVE="prod" \
             -e EUREKA_HOST="directory" \
+            -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
             virtud142/metradingplat_gateway:latest
 
       - name: Clean Old Images of This Service
