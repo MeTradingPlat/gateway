@@ -96,7 +96,11 @@ jwt:
 
 logging:
   level:
+    "[org.springframework.cloud.gateway]": DEBUG
+    "[org.springframework.http.server.reactive]": DEBUG
+    "[org.springframework.web.reactive]": DEBUG
     "[com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver]": WARN
+    "[com.netflix.discovery]": WARN
 
 server:
   port: 8080
@@ -120,7 +124,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,gateway,metrics
   endpoint:
     health:
       show-details: always
