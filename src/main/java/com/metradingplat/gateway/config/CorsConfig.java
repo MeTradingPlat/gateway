@@ -16,7 +16,8 @@ public class CorsConfig {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.setAllowedOrigins(Arrays.asList(
                 "https://metradingplat.net",
-                "https://www.metradingplat.net"));
+                "https://www.metradingplat.net",
+                "http://localhost:4200"));
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         corsConfig.setAllowedHeaders(Arrays.asList("*"));
         corsConfig.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
