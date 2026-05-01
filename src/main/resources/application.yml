@@ -14,8 +14,9 @@ spring:
               '[/**]':
                 allowed-origins:
                   - "https://metradingplat.net"
+                  - "http://metradingplat.net"
                   - "https://www.metradingplat.net"
-                  - "http://localhost:4200"
+                  - "http://www.metradingplat.net"
                 allowed-methods:
                   - GET
                   - POST
