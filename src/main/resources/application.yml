@@ -49,7 +49,9 @@ spring:
                 - Path=/api/marketdata/**,/api/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
-                - JwtAuthenticationFilter
+                - name: JwtAuthenticationFilter
+                  args:
+                    adminOnly: true
               metadata:
                 response-timeout: 120000
                 connect-timeout: 10000
@@ -66,7 +68,9 @@ spring:
                 - Path=/api/logs/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
-                - JwtAuthenticationFilter
+                - name: JwtAuthenticationFilter
+                  args:
+                    adminOnly: true
             - id: notification-service
               uri: lb://notification-service
               predicates:

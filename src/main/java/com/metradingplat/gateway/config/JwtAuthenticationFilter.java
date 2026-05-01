@@ -52,13 +52,20 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 // Extrae los roles y los convierte en un string separado por comas
                 String rolesStr = String.join(",", roles);
                 
-                // Validación de Permisos (RBAC global)
-                // Si el usuario NO es editor, y la petición es de modificación (POST, PUT, DELETE, PATCH), bloqueamos.
+                // Validación de Permisos (RBAC)
+                boolean isAdmin = roles.contains("ROLE_EDITOR");
+                
+                // Si la ruta es marcada como 'adminOnly' y el usuario no es admin, bloqueamos.
+                if (config.isAdminOnly() && !isAdmin) {
+                    return this.onError(exchange, "Access Denied: This service is restricted to administrators.", HttpStatus.FORBIDDEN);
+                }
+
+                // Si NO es admin, y la petición es de modificación (POST, PUT, DELETE, PATCH), bloqueamos.
                 String method = request.getMethod().name();
                 boolean isModifyRequest = method.equals("POST") || method.equals("PUT") || 
                                           method.equals("DELETE") || method.equals("PATCH");
-                                          
-                if (isModifyRequest && !roles.contains("ROLE_EDITOR")) {
+                                           
+                if (isModifyRequest && !isAdmin) {
                     return this.onError(exchange, "Access Denied: You do not have permission to modify.", HttpStatus.FORBIDDEN);
                 }
                 
@@ -83,6 +90,14 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     }
 
     public static class Config {
-        // configuration properties
+        private boolean adminOnly = false;
+
+        public boolean isAdminOnly() {
+            return adminOnly;
+        }
+
+        public void setAdminOnly(boolean adminOnly) {
+            this.adminOnly = adminOnly;
+        }
     }
 }
