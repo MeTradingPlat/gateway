@@ -113,7 +113,7 @@ server:
 # Configuración del rate limiting del gateway
 gateway:
   rate-limit:
-    habilitado: true
+    habilitado: false
     limite-peticiones-por-minuto: 120
     umbral-baneo-automatico: 300
     duracion-baneo-minutos: 10
