@@ -87,7 +87,8 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     private Mono<Void> onError(org.springframework.web.server.ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
-        return response.setComplete();
+        response.getHeaders().add(org.springframework.http.HttpHeaders.CONTENT_TYPE, "text/plain");
+        return response.writeWith(reactor.core.publisher.Flux.just(response.bufferFactory().wrap(err.getBytes())));
     }
 
     public static class Config {
