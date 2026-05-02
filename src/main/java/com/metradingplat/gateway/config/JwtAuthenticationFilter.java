@@ -78,7 +78,8 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                 return chain.filter(exchange.mutate().request(modifiedRequest).build());
 
             } catch (Exception e) {
-                return this.onError(exchange, "Invalid JWT token", HttpStatus.UNAUTHORIZED);
+                System.err.println("JWT Validation Error: " + e.getMessage());
+                return this.onError(exchange, "Invalid JWT token: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
             }
         };
     }
