@@ -17,6 +17,8 @@ spring:
                   - "http://metradingplat.net"
                   - "https://www.metradingplat.net"
                   - "http://www.metradingplat.net"
+                  - "https://api.metradingplat.net"
+                  - "http://api.metradingplat.net"
                 allowed-methods:
                   - GET
                   - POST
@@ -33,20 +35,20 @@ spring:
               uri: lb://auth-service
               order: -1
               predicates:
-                - Path=/api/auth/**
+                - Path=/auth/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
             - id: scanner-management-service
               uri: lb://scanner-management-service
               predicates:
-                - Path=/api/escaner/**
+                - Path=/escaner/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
             - id: marketdata-service
               uri: lb://marketdata-service
               predicates:
-                - Path=/api/marketdata/**,/api/test/**
+                - Path=/marketdata/**,/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - name: JwtAuthenticationFilter
@@ -58,14 +60,14 @@ spring:
             - id: asset-management-service
               uri: lb://asset-management-service
               predicates:
-                - Path=/api/activos/**
+                - Path=/activos/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
             - id: log-service
               uri: lb://log-service
               predicates:
-                - Path=/api/logs/**
+                - Path=/logs/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - name: JwtAuthenticationFilter
@@ -74,7 +76,7 @@ spring:
             - id: notification-service
               uri: lb://notification-service
               predicates:
-                - Path=/api/notificaciones/**
+                - Path=/notificaciones/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
