@@ -55,7 +55,7 @@ spring:
             - id: notification-service
               uri: lb://notification-service
               predicates:
-                - Path=/notificaciones/**
+                - Path=/notificaciones/**,/notifications/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
