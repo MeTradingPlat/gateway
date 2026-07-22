@@ -52,10 +52,24 @@ spring:
                 - name: JwtAuthenticationFilter
                   args:
                     adminOnly: true
+            - id: notification-service-en
+              uri: lb://notification-service
+              order: 1
+              predicates:
+                - Path=/notifications/**
+              filters:
+                - RewritePath=/notifications/(?<path>.*), /notificaciones/${path}
+                - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
+                - AddResponseHeader=X-Accel-Buffering,no
+                - AddResponseHeader=Cache-Control,no-cache
+              metadata:
+                response-timeout: -1
+                connect-timeout: 10000
             - id: notification-service
               uri: lb://notification-service
               predicates:
-                - Path=/notificaciones/**,/notifications/**
+                - Path=/notificaciones/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
