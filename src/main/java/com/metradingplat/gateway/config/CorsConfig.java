@@ -1,6 +1,5 @@
 package com.metradingplat.gateway.config;
 
-/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -8,9 +7,7 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-*/
 
-/* 
 @Configuration
 public class CorsConfig {
 
@@ -22,7 +19,7 @@ public class CorsConfig {
                 "https://metradingplat.net",
                 "http://metradingplat.net",
                 "https://www.metradingplat.net",
-                "http://www.metradingplat.net"}));
+                "http://www.metradingplat.net"));
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         corsConfig.setAllowedHeaders(Arrays.asList("*"));
         corsConfig.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
@@ -35,4 +32,3 @@ public class CorsConfig {
         return new CorsWebFilter(source);
     }
 }
-*/
