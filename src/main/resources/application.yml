@@ -9,27 +9,6 @@ spring:
     gateway:
       server:
         webflux:
-          globalcors:
-            cors-configurations:
-              '[/**]':
-                allowed-origins:
-                  - "https://metradingplat.net"
-                  - "http://metradingplat.net"
-                  - "https://www.metradingplat.net"
-                  - "http://www.metradingplat.net"
-                  - "https://api.metradingplat.net"
-                  - "http://api.metradingplat.net"
-                allowed-methods:
-                  - GET
-                  - POST
-                  - PUT
-                  - DELETE
-                  - PATCH
-                  - OPTIONS
-                allowed-headers:
-                  - "*"
-                allow-credentials: true
-                max-age: 3600
           routes:
             - id: auth-service
               uri: lb://auth-service
