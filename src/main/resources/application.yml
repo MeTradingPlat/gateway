@@ -24,6 +24,25 @@ spring:
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
                 - JwtAuthenticationFilter
+            - id: marketdata-symbols-viewer
+              uri: lb://marketdata-service
+              order: -1
+              predicates:
+                - Path=/marketdata/symbols,/marketdata/symbols/**,/marketdata/markets,/marketdata/timeframes
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
+              metadata:
+                response-timeout: 120000
+                connect-timeout: 10000
+            - id: marketdata-candles-websocket-viewer
+              uri: lb://marketdata-service
+              order: -1
+              predicates:
+                - Path=/ws/candles
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+                - JwtAuthenticationFilter
             - id: marketdata-service
               uri: lb://marketdata-service
               predicates:
