@@ -36,6 +36,15 @@ spring:
               metadata:
                 response-timeout: 120000
                 connect-timeout: 10000
+            - id: marketdata-websocket
+              uri: lb://marketdata-service
+              predicates:
+                - Path=/ws/**
+              filters:
+                - AddRequestHeader=X-Gateway-Passed,true
+                - name: JwtAuthenticationFilter
+                  args:
+                    adminOnly: true
             - id: asset-management-service
               uri: lb://asset-management-service
               predicates:
