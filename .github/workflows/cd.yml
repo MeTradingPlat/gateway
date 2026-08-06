@@ -55,7 +55,15 @@ jobs:
           exit 1
 
       - name: Delete Old Docker Container
-        run: docker rm -f gateway || true
+        run: |
+          # docker stop (SIGTERM) antes de rm -f (SIGKILL directo) -- le da
+          # tiempo al shutdown hook de Eureka a desregistrarse limpiamente.
+          # Sin esto, el gateway seguia enrutando a la IP vieja del
+          # contenedor muerto hasta que la lease expirara (confirmado en
+          # vivo: 500 "Connection refused" por varios minutos tras cada
+          # deploy de un servicio registrado en Eureka).
+          docker stop gateway 2>/dev/null || true
+          docker rm -f gateway || true
 
       - name: Run Docker Container with Network
         run: |
