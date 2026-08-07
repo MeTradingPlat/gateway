@@ -49,9 +49,7 @@ spring:
                 - Path=/marketdata/**,/test/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
-                - name: JwtAuthenticationFilter
-                  args:
-                    adminOnly: true
+                - JwtAuthenticationFilter
               metadata:
                 response-timeout: 120000
                 connect-timeout: 10000
@@ -61,9 +59,7 @@ spring:
                 - Path=/ws/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
-                - name: JwtAuthenticationFilter
-                  args:
-                    adminOnly: true
+                - JwtAuthenticationFilter
             - id: asset-management-service
               uri: lb://asset-management-service
               predicates:
@@ -77,9 +73,7 @@ spring:
                 - Path=/logs/**
               filters:
                 - AddRequestHeader=X-Gateway-Passed,true
-                - name: JwtAuthenticationFilter
-                  args:
-                    adminOnly: true
+                - JwtAuthenticationFilter
             - id: notification-service-en
               uri: lb://notification-service
               order: 1
