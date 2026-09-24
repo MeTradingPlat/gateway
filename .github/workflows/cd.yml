@@ -75,6 +75,8 @@ jobs:
             --cpus "0.5" \
             --memory "384m" \
             --memory-swap "384m" \
+            --log-opt max-size="50m" \
+            --log-opt max-file="3" \
             --label project="metradingplat" \
             --label service="gateway" \
             -e SPRING_PROFILES_ACTIVE="prod" \

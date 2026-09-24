@@ -118,9 +118,6 @@ jwt:
 
 logging:
   level:
-    "[org.springframework.cloud.gateway]": DEBUG
-    "[org.springframework.http.server.reactive]": DEBUG
-    "[org.springframework.web.reactive]": DEBUG
     "[com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver]": WARN
     "[com.netflix.discovery]": WARN
 
