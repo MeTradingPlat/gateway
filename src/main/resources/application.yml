@@ -9,6 +9,16 @@ spring:
     gateway:
       server:
         webflux:
+          httpclient:
+            websocket:
+              # Default de Reactor Netty (65536) -- el historial inicial de
+              # /ws/candles para D1 pesa mas que eso por simbolo (mas cifras
+              # decimales por barra que M1/M5/etc, confirmado en vivo: 66184
+              # bytes vs ~52000 de los demas timeframes), asi que el proxy
+              # cortaba la conexion a mitad del frame antes de que el
+              # suscriptor llegara a registrarse -- el cliente veia un ciclo
+              # infinito de reconexion solo con D1.
+              max-frame-payload-length: 1048576
           routes:
             - id: auth-service
               uri: lb://auth-service
